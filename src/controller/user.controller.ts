@@ -20,17 +20,14 @@ export const userLogin = (req: Request, res: Response) => {
 
     const { username, password } = body;
 
-    // Step 1 find user
     const user = users.find(
       (user) => user.username === username && user.password === password
     );
 
-    // Step 2 Check if user was found
     if (!user) {
       return handleRes(req, res, 401, false, "Invalid username or password");
     }
 
-    // Step 3 Create a token
     const jwtKey = process.env.JWT_SECRET || "JustSayLove";
     const payload = {
       username: user.username,
@@ -55,7 +52,6 @@ export const userLogout = (req: CustomRequest, res: Response) => {
       return handleRes(req, res, 401, false, "Invalid token or user");
     }
 
-    // if token exists, remove the token from user.tokens
     delete req.user;
     delete req.token;
 
